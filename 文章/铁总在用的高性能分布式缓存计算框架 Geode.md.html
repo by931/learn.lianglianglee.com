@@ -547,7 +547,7 @@ function hide_canvas() {
 <p><a href="https://geode.apache.org/releases/">https://geode.apache.org/releases/</a></p>
 </blockquote>
 <p>一般我们选择第一个 tgz 的包 ，版本我这里先选用 1.8 的，为了后续测试滚动升级使用。</p>
-<p><img src="assets/dc4cd400-1687-11ea-a278-bf8e3f1326ea.png.png" alt="img" /></p>
+<p><img src="assets/dc4cd400-1687-11ea-a278-bf8e3f1326ea.png" alt="img" /></p>
 <h4>上传，解压，配置 /etc/profile</h4>
 <p>拷贝至：</p>
 <pre><code>cp /tmp/upload_dir/ddh/apache-geode-1.8.0.tgz /opt/apache-geode-1.8.0.tgz
@@ -638,7 +638,7 @@ Successfully connected to: [host=192.168.33.15, port=1099]
 </code></pre>
 <p>默认用户名密码 admin/admin。</p>
 <p>先看个效果图：</p>
-<p><img src="assets/12c00980-1688-11ea-a278-bf8e3f1326ea.png.png" alt="img" /></p>
+<p><img src="assets/12c00980-1688-11ea-a278-bf8e3f1326ea.png" alt="img" /></p>
 <h3>gfsh 常用命令介绍</h3>
 <p>gfsh 的作用：</p>
 <ul>
@@ -1310,9 +1310,9 @@ gfsh start server --name=${servername} --locators=${locators} --locator-wait-tim
 <p>Geode 非常贴心地为我们继承了 Swagger 插件：</p>
 <pre><code>&lt;http://192.168.33.15:8888/geode/swagger-ui.html#/&gt; 
 </code></pre>
-<p><img src="assets/46f3fd60-1688-11ea-988c-fdda706d8b74.png.png" alt="img" /></p>
-<p><img src="assets/6a96c310-1688-11ea-a278-bf8e3f1326ea.png.png" alt="img" /></p>
-<p><img src="assets/747d6640-1688-11ea-b942-d94b94287f55.png.png" alt="img" /></p>
+<p><img src="assets/46f3fd60-1688-11ea-988c-fdda706d8b74.png" alt="img" /></p>
+<p><img src="assets/6a96c310-1688-11ea-a278-bf8e3f1326ea.png" alt="img" /></p>
+<p><img src="assets/747d6640-1688-11ea-b942-d94b94287f55.png" alt="img" /></p>
 <p>具体 API 可参考官方网页：</p>
 <blockquote>
 <p><a href="https://geode.apache.org/docs/guide/19/rest_apps/develop_rest_apps.html">https://geode.apache.org/docs/guide/19/rest<em>apps/develop</em>rest_apps.html</a></p>
@@ -1320,10 +1320,10 @@ gfsh start server --name=${servername} --locators=${locators} --locator-wait-tim
 <h3>Geode 部署模式</h3>
 <h4>点对点</h4>
 <p>点对点的方式也叫对等方式，就是我们没有专门的 Geode 集群，服务是迁入到我们应用程序中的。</p>
-<p><img src="assets/8c5b52e0-1688-11ea-94bc-f516225b4bcb.png.png" alt="img" /></p>
+<p><img src="assets/8c5b52e0-1688-11ea-94bc-f516225b4bcb.png" alt="img" /></p>
 <h4>C/S</h4>
 <p>该模式就是我们常用的集群模式，有一个 Geode 的中心集群，应用程序通过客户端去调用， 这个模式跟 ES 的集群， Redis 的集群非常相似。</p>
-<p><img src="assets/9ef437f0-1688-11ea-981f-cdaafe390fdd.png.png" alt="img" /></p>
+<p><img src="assets/9ef437f0-1688-11ea-981f-cdaafe390fdd.png" alt="img" /></p>
 <h4>多站点</h4>
 <p>所谓的多站点，就是跨机房，跨地域进行数据同步，非常适合做备份之类的部署， Geode 能够保证数据的最终一致性。目前我们的生产环境通过多站点引入备份集群，以备容灾和其他非主要业务的访问。</p>
 <p><img src="assets/consistent_multisite.png" alt="img" /></p>
@@ -1354,8 +1354,8 @@ File saved to /opt/./cluster-config-back.zip
 <pre><code>ps -ef | grep geode //查看启动参数
 </code></pre>
 <p>\2. 第二个导出配置文件，是一些常规配置，以前修改过的，关于 region 等的一些配置。</p>
-<p><img src="assets/c46bbda0-1688-11ea-981f-cdaafe390fdd.png.png" alt="img" /></p>
-<p><img src="assets/caf79d10-1688-11ea-8478-cb869aae9121.png.png" alt="img" /></p>
+<p><img src="assets/c46bbda0-1688-11ea-981f-cdaafe390fdd.png" alt="img" /></p>
+<p><img src="assets/caf79d10-1688-11ea-8478-cb869aae9121.png" alt="img" /></p>
 <h4>拷贝新版本</h4>
 <p>准备好 1.9.2 版本并上传至服务器，拷贝至：</p>
 <pre><code>cp /tmp/upload_dir/ddh/apache-geode-1.9.2.tgz apache-geode-1.9.2.tgz
@@ -1465,9 +1465,9 @@ Cluster-254 gfsh&gt;
 <p>但是并不影响程序使用，可是每次启动都报个异常总是不开心的。</p>
 <p>借着这个契机，我们升级了 Tomcat 8.5。</p>
 <p>原因解读：</p>
-<p><img src="assets/ead82aa0-1688-11ea-8c8a-f5a12e386854.png.png" alt="img" /></p>
+<p><img src="assets/ead82aa0-1688-11ea-8c8a-f5a12e386854.png" alt="img" /></p>
 <p>新的 1.8 的 client 包引入了新的类，这个新的类有 Java 9 的模块化信息，然后这个版本的 Tomcat 是无法扫描模块化 jar 包的。</p>
-<p><img src="assets/f411ec00-1688-11ea-a6a9-8f5c13f0663b.png.png" alt="img" /></p>
+<p><img src="assets/f411ec00-1688-11ea-a6a9-8f5c13f0663b.png" alt="img" /></p>
 <p>看 Tomcat 官网发现，在 7.0.83 的时候才支持了这个问题。使用了 7.0.91 测试就不报哪个异常了。</p>
 <p>因此我们选择了直接升级到 8.5。</p>
 <h4>滚动升级影响</h4>
@@ -1568,13 +1568,13 @@ server_33_15 | OK     | [7, 5]
 <p>pulse 中可以在不同维护查看数据。</p>
 <p><strong>1. 总览</strong></p>
 <p>内存，成员数，服务数，region 数量，集群读写等等。</p>
-<p><img src="assets/133ac250-1689-11ea-94bc-f516225b4bcb.png.png" alt="img" /></p>
+<p><img src="assets/133ac250-1689-11ea-94bc-f516225b4bcb.png" alt="img" /></p>
 <p><strong>2. ip 维度</strong></p>
 <p>这里多了一个机器的链接详情：</p>
-<p><img src="assets/1d2a1810-1689-11ea-8812-dd393aeead92.png.png" alt="img" /></p>
+<p><img src="assets/1d2a1810-1689-11ea-8812-dd393aeead92.png" alt="img" /></p>
 <p><strong>3. region 维度</strong></p>
 <p>region 维度主要对 region 进行描述：</p>
-<p><img src="assets/27c5da70-1689-11ea-a523-0bd97445ce75.png.png" alt="img" /></p>
+<p><img src="assets/27c5da70-1689-11ea-a523-0bd97445ce75.png" alt="img" /></p>
 <h4>监控</h4>
 <p>监控有两种方式。</p>
 <h4>gfsh 脚本进行监控</h4>
@@ -1610,12 +1610,12 @@ MetricGuageUtil.guage(build, &quot;JVMPauses&quot;);
 metricList.add(build);
 </code></pre>
 <p>关于 JMX 的数据结构大家可以使用 jvisualvm 连接查看：</p>
-<p><img src="assets/383aa700-1689-11ea-8812-dd393aeead92.png.png" alt="img" /></p>
+<p><img src="assets/383aa700-1689-11ea-8812-dd393aeead92.png" alt="img" /></p>
 <p>看它的目录结构，我们可以发现其实它就是按照集群、ip、region 进行区分的，与它的 pulse 中所能显示的保持一致性。</p>
 <p>我们通过 job 采集的数据最终入到 ES 中，并在这期间判定是否需要报警，如果需要的话会发送邮件、短信、企业微信机器人。</p>
 <p>进入 ES 后我们再通过 Grafana 进行展示，这样就可以看见历史指标的波动情况，为分析问题提供依据。</p>
-<p><img src="assets/3e6d9100-1689-11ea-8c8a-f5a12e386854.png.png" alt="img" /></p>
-<p><img src="assets/430d09c0-1689-11ea-a6a9-8f5c13f0663b.png.png" alt="img" /></p>
+<p><img src="assets/3e6d9100-1689-11ea-8c8a-f5a12e386854.png" alt="img" /></p>
+<p><img src="assets/430d09c0-1689-11ea-a6a9-8f5c13f0663b.png" alt="img" /></p>
 <p>如上图所示是我们的一些重点指标。</p>
 <p>但是 Geode 的统计也不是那么的准的，主要有以下问题：</p>
 <ul>

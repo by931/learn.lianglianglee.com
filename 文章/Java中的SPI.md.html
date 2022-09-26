@@ -492,7 +492,7 @@ function hide_canvas() {
 <h2>SPI示例</h2>
 <p>还是举例说明吧。
 我们创建一个项目，然后创建一个module叫spi-interface。
-<img src="assets/20201206231416917.png.png" alt="img" />
+<img src="assets/20201206231416917.png" alt="img" />
 在这个module中我们定义一个接口：</p>
 <pre><code class="language-java">/**
  * @author jimoer
@@ -526,7 +526,7 @@ public class SpiOneService implements SpiInterfaceService {
 </code></pre>
 <p>然后再spi-service-one的resources目录下创建目录META-INF/services，在此目录下创建一个文件名称为SpiInterfaceService接口的全限定名称，文件内容写入SpiOneService这个实现类的全限定名称。
 效果如下：
-<img src="assets/20201206230909117.png.png" alt="img" />
+<img src="assets/20201206230909117.png" alt="img" />
 再创建一个module，名称为：spi-service-one，也是依赖spi-interface，并且定义一个实现类SpiTwoService 来实现SpiInterfaceService 接口。</p>
 <pre><code class="language-java">package com.jimoer.spi.service.two;
 import com.jimoer.spi.app.SpiInterfaceService;
@@ -546,8 +546,8 @@ public class SpiTwoService implements SpiInterfaceService {
 }
 </code></pre>
 <p>目录结构如下：
-<img src="assets/20201206231315234.png.png" alt="img" />
-下面再创建一个用来测试的module，名为：spi-app。<img src="assets/20201206231517172.png.png" alt="img" />
+<img src="assets/20201206231315234.png" alt="img" />
+下面再创建一个用来测试的module，名为：spi-app。<img src="assets/20201206231517172.png" alt="img" />
 pom.xml中依赖<code>spi-service-one</code>和<code>spi-service-two</code></p>
 <pre><code class="language-xml">&lt;dependencies&gt;
     &lt;dependency&gt;
@@ -582,7 +582,7 @@ public class SpiService {
 我是SpiOneService:参数
 </code></pre>
 <p>通过运行结果我们可以看到，已经将SpiInterfaceService接口的所有实现都加载到了当前项目中，并且执行了调用。
-<img src="assets/2020120700453760.png.png" alt="img" />
+<img src="assets/2020120700453760.png" alt="img" />
 这整个代码结构我们可以看出SPI机制将模块的装配放到了程序外面，就是说，接口的实现可以在程序外面，只需要在使用的时候指定具体的实现。并且动态的加载到自己的项目中。
 SPI机制的主要目的：
 <strong>一是为了解耦，将接口和具体实现分离开来；</strong>
@@ -605,7 +605,7 @@ SPI机制的主要目的：
 </blockquote>
 <p>虽然知道了它是破坏双亲委派的了，但是具体实现，还是需要具体往下看的。</p>
 <p>在ServiceLoader里找到具体实现hasNext()的方法了，那么继续来看这个方法的实现。
-<img src="assets/20201207000120134.png.png" alt="img" />
+<img src="assets/20201207000120134.png" alt="img" />
 hasNext()方法又主要调用了hasNextService()方法。</p>
 <pre><code class="language-java">// 固定路径
 private static final String PREFIX = &quot;META-INF/services/&quot;;
@@ -639,7 +639,7 @@ private boolean hasNextService() {
 </code></pre>
 <p>主要就是去加载META-INF/services/路径下的接口全限定名称的文件然后去里面找到实现类的类路径将实现类进行类加载。</p>
 <p>继续看迭代器是如何取出每一个实现对象的。那就要看ServiceLoader中实现了迭代器的next()方法了。
-<img src="assets/20201207001419765.png.png" alt="img" />
+<img src="assets/20201207001419765.png" alt="img" />
 next()方法主要是nextService()实现的，那么继续看nextService()方法。</p>
 <pre><code class="language-java">private S nextService() {
      if (!hasNextService())

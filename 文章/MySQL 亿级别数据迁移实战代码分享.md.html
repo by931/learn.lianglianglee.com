@@ -504,8 +504,8 @@ function hide_canvas() {
 </ol>
 <p>Spring Batch 的文档很全面，但对于初学者来说，整个文档读完需要耗费比较长的时间，这里只看两张 Spring Batch 的架构图，后面我会通过实际工作中的迁移案例来讲解怎么使用它。</p>
 <h4>架构图</h4>
-<p><img src="assets/8bd2ac90-2f8f-11ea-a6f3-07a41d160500.png.png" alt="img" /></p>
-<p><img src="assets/96a647d0-2f8f-11ea-a6f3-07a41d160500.png.png" alt="img" /></p>
+<p><img src="assets/8bd2ac90-2f8f-11ea-a6f3-07a41d160500.png" alt="img" /></p>
+<p><img src="assets/96a647d0-2f8f-11ea-a6f3-07a41d160500.png" alt="img" /></p>
 <p>第一张图是架构图，第二张分区处理图。</p>
 <p>从这两张图可以看到这正是我们迁移大数据量下的核心诉求。输入端是从数据源读取数据，数据源可以来源于文件或者数据库，中间的处理流程是对数据进行加工，因为有些数据我们需要进行转换和处理，输出端是写出数据，可以写入到文件或者数据库。</p>
 <h4>核心组件</h4>
@@ -849,7 +849,7 @@ JobExecution abandon(long var1) throws NoSuchJobExecutionException, JobExecution
 <p>在 Spring Batch 的 Admin 管理系统中主要就是通过这个类来获取任务的执行情况。</p>
 <p><strong>9. 总结</strong></p>
 <p>通过上面的演示可以清楚的看到 Spring Batch 的执行逻辑，Spring Batch 定义了模板，我们在使用过程中只需要按照接口提供相应的数据来源和输出的接口即可。其他的事务处理，多线程池，批量处理，内存控制都由框架来完成。那么 Spring Batch 是怎么样保证在大数据量级的情况下，内存不溢出然后又保证性能的呢，下面用一张图进行展示 Spring Batch 是通过怎么的处理，保证在数据量巨大的情况下，高性能的进行数据的读写的。</p>
-<p><img src="assets/d9d2ef90-2f8f-11ea-b7a2-bd62e8fb625b.png.png" alt="img" /></p>
+<p><img src="assets/d9d2ef90-2f8f-11ea-b7a2-bd62e8fb625b.png" alt="img" /></p>
 <h4>其他业务场景的扩展</h4>
 <p>在实际中项目处理中，我们面对的系统情况可能并不是一个单表这样简单的业务情况，比如多表合一、一表分表为多表，在迁移过程中数据变更的情形。那么这些场景该如何处理呢？</p>
 <p><strong>1. 多表合一的场景</strong></p>

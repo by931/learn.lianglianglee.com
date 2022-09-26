@@ -603,7 +603,7 @@ standalone:
 </ul>
 <p>这里简单的解释下，Mixed 是混合模式，既包含 Aggregator 和 Receiver。Aggregator，是聚合器模式，也就是说数据收集到 OAP 平台之后，数据需要做过滤、清晰和聚合然后再存储。Receiver 是收集器模式，也就是原始数据会直接存储，不做任何处理，当然这个肯定会有最核心的链路数据，就不会产生很多通过聚合之后产生的指标数据了。</p>
 <p>那么 Skywalking 中的集群管理主要是针对 Aggregator 模式，当然肯定也会包含 Mixed 模式。那么为什么 Aggregator 模式需要分布式集群管理功能，这个我们应该能够理解，因为需要处理数据，那么肯定需要保证 CAP 或者 BASE 理论了，也就是要保证集群节点之间的分布式特性，所以 Skywalking 就针对你所需要的集群功能，然后通过选择器架构模式，来充分满足平台的深度用户可以任意的挑选符合自己业务场景的集群管理能力。比如我们公司的技术栈是 Nacos，那么我们肯定会优先选择它作为集群管理，非常灵活。</p>
-<p><img src="assets/caa5fa00-c916-11ea-ac32-8d2af7162ed8.png.png" alt="img" /></p>
+<p><img src="assets/caa5fa00-c916-11ea-ac32-8d2af7162ed8.png" alt="img" /></p>
 <p>再聊聊 Skywalking 集群管理服务的能力有哪些，首先我们聚焦在服务发现，因为用到了集群能力，肯定是要服务发现，找到集群上注册的服务提供者的基础元数据。</p>
 <p>ClusterNodesQuery.queryRemoteNodes() 能力，在 Skywalking 中如何被利用，首先我们关注下 RemoteClientManager ，这个类管理 OAP 服务节点集群之间的连接。有一个任务调度会自动查询服务节点列表从集群模块。比如 ZooKeeper 集群模块或 Kubernetes 集群模块。</p>
 <p>从集群模块查询 OAP 服务器列表，并为新节点创建一个新连接。创建 OAP 服务器有序，因为每个服务节点会通过哈希码互相发送流数据。通过 queryRemoteNodes 的集群能力，找到集群中的节点信息列表。</p>

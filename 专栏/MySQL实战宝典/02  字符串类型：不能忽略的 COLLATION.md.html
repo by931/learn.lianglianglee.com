@@ -185,7 +185,7 @@ function hide_canvas() {
 <h4>字符集</h4>
 <p>在表结构设计中，除了将列定义为 CHAR 和 VARCHAR 用以存储字符以外，还需要额外定义字符对应的字符集，因为每种字符在不同字符集编码下，对应着不同的二进制值。常见的字符集有 GBK、UTF8，通常推荐把默认字符集设置为 UTF8。</p>
 <p>而且随着移动互联网的飞速发展，<strong>推荐把 MySQL 的默认字符集设置为 UTF8MB4</strong>，否则，某些 emoji 表情字符无法在 UTF8 字符集下存储，比如 emoji 笑脸表情，对应的字符编码为 0xF09F988E：</p>
-<p><img src="assets/CioPOWCLjaOANGrbAAD3LJzwYeU752.png.png" alt="img" /></p>
+<p><img src="assets/CioPOWCLjaOANGrbAAD3LJzwYeU752.png" alt="img" /></p>
 <p>若强行在字符集为 UTF8 的列上插入 emoji 表情字符， MySQL 会抛出如下错误信息：</p>
 <pre><code>mysql&gt; SHOW CREATE TABLE emoji_test\G
 *************************** 1. row ***************************

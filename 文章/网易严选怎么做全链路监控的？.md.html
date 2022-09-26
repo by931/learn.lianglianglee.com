@@ -657,9 +657,9 @@ function hide_canvas() {
 <li>网络请求错误的时候也可以收集到，记录为错误（异常处理）或者网络请求失败（链路跟踪）都可以，我是按照链路跟踪处理的，因为网络请求错误没有堆栈信息，也没有分析代码的价值。</li>
 </ol>
 <p>话说回来，我们通过 TraceId，是怎么实现分布式链路跟踪的呢？这里不得不引入一张 Google 的图。</p>
-<p><img src="assets/af8ee760-86a7-11ea-8580-efe30fb23e5b.png.png" alt="img" /></p>
+<p><img src="assets/af8ee760-86a7-11ea-8580-efe30fb23e5b.png" alt="img" /></p>
 <p>简单说，就是前端打一个标记以后，在后端服务节点传递数据的时候，保留这个头部，同时添加 from/to 的逻辑，来串联请求链路。</p>
-<p><img src="assets/db6ff770-86a7-11ea-94dc-e928d61ce86c.png.png" alt="img" /></p>
+<p><img src="assets/db6ff770-86a7-11ea-94dc-e928d61ce86c.png" alt="img" /></p>
 <h4>网络请求这玩意你 Hack，你挂了咋整？</h4>
 <p>危险的代码都需要 <code>try...catch</code>，对于 SDK 来讲，只是 try…catch 还不够，还需要做两件事：</p>
 <ol>
@@ -690,7 +690,7 @@ function hide_canvas() {
 </code></pre>
 <h4>2.5 用户行为数据</h4>
 <p>用户数据收集的目的是为了复现错误发生时用户的操作轨迹。以 FunDebug 的效果图为例。</p>
-<p><img src="assets/6bedeee0-8637-11ea-9ff7-cf1f0a784843.png.png" alt="img" /></p>
+<p><img src="assets/6bedeee0-8637-11ea-9ff7-cf1f0a784843.png" alt="img" /></p>
 <p>收集用户信息时时刻进行的，这里的收集可以放到 worker 中进行，单独开一个线程处理可以减少对业务的性能损耗。</p>
 <p>行为队列是一个固定长度（一般为 5~10 步）的队列，一旦发生错误，则从队列中取出当前内容，并清空队列，将错误信息和队列中的行为信息一同发布到后端。熟悉 HTTP 请求的同学就会发现，这不就是个“滑动窗口”么，对对，就是这个，太专业的！</p>
 <p>另外，错误信息需要延迟发送，主要避免什么情况呢，就是重复报错数据的收集。重复报错问题在前端太常见了，一个报错你不管它，相同的操作再来一遍，还报错，再来一遍还是报错。就是这样，但这种场景下我们需要重复收集么，当然不用，只需要记录一下错误发生的次数就行了。</p>
@@ -699,7 +699,7 @@ function hide_canvas() {
 <p>数据收集好以后，需要上报到日志收集服务，上报数据的时候就会遇到这么几个问题，数据模型的一致性（便于清洗和聚合），上报的方式和性能，以及自主数据上报能力。</p>
 <h4>3.1 定义上报模型</h4>
 <p>上报的数据模型采用了通用的 OpenTracing 模型，结合我厂的一部分业务场景进行了改造。</p>
-<p><img src="assets/e27d02e0-86a9-11ea-b1ce-c55688cf3f05.png.png" alt="img" /></p>
+<p><img src="assets/e27d02e0-86a9-11ea-b1ce-c55688cf3f05.png" alt="img" /></p>
 <h4>3.2 上报方式</h4>
 <p>一般上报会采用一个静态文件的形式比如 PNG/GIF 这种，可以规避跨域和异步等待的问题。在我开发 SDK 的时候，我把常见的上报方式都拿出来对比了一下。</p>
 <ul>
@@ -711,7 +711,7 @@ function hide_canvas() {
 <li>小程序中使用小程序的 request 方法上报</li>
 </ul>
 <p>首先会考虑使用 sendBeacon，毕竟是官方提供的专门用来做 report 的 API，虽然兼容性很挫。</p>
-<p><img src="assets/362e8b80-86a4-11ea-bdf2-1776e599fc0a.png.png" alt="img" /></p>
+<p><img src="assets/362e8b80-86a4-11ea-bdf2-1776e599fc0a.png" alt="img" /></p>
 <p>但不影响我们对技术本身的追求嘛。</p>
 <p>实在没有，那就得看一下上报数据的长度和方式了。一般情况下上报会分为两种形式。</p>
 <ol>
@@ -730,7 +730,7 @@ function hide_canvas() {
 <p>核心截图逻辑可以抽离出来作为 Serverless，Capture as Service。</p>
 <h3>4. 数据流向</h3>
 <p>数据从 SDK 收集上报以后，通过 HTTP2 通道将数据发送到 Gateway 进行鉴权和过滤，而后通过 Kafka 通道消费到 Collector 做数据清洗、聚合和存储，最后向 NodeBFF 提供数据，由 NodeBFF 对数据可视化平台提供特性数据接口，最终时间数据可视化展示。</p>
-<p><img src="assets/0c2ed6e0-86aa-11ea-9ff7-cf1f0a784843.png.png" alt="img" /></p>
+<p><img src="assets/0c2ed6e0-86aa-11ea-9ff7-cf1f0a784843.png" alt="img" /></p>
 <h3>5. 数据可视化</h3>
 <p>数据上报上来以后，需要对数据进行可视化展示，展示的数据不外乎性能、异常、链路信息。但这些信息的重心却不一样。</p>
 <h4>5.1 异常信息展示</h4>
@@ -749,7 +749,7 @@ function hide_canvas() {
 <li>区分不同开发环境（测试、线上）时需要进行额外配置，甚至加载不同的 SDK</li>
 </ol>
 <p>这些都是让业务方觉得不靠谱的地方 ，那如何解决这个问题呢？</p>
-<p><img src="assets/fee36fc0-86a7-11ea-a330-69dc969564d3.png.png" alt="img" /></p>
+<p><img src="assets/fee36fc0-86a7-11ea-a330-69dc969564d3.png" alt="img" /></p>
 <p>简单说就是造一个壳子，这个壳子可以从 CDN 拉取 script 模板，而这个模板是可以随时通过管理平台进行配置的。对于业务方而言，只需要接入一次盒子（或者通过工程化脚本、CI/CD 过程自动化接入）就可以通过配置来接入 SDK 了。</p>
 <p>很不幸的是，当我有这个想法之后，抬头看一下，发现 Google/云音乐的大佬们早就已经做出来这样的东西了。最终还是采用共建的形式，引入了他们的方案。怎么说呢。</p>
 <blockquote>
@@ -798,7 +798,7 @@ function hide_canvas() {
 <p>你心中的 APM 应该是个什么样子呢？</p>
 </blockquote>
 <p>我大概做了个脑洞，给这个未来建起来的监控生态取名 hands 取义，上帝之手。你瞧不见他，但他无时不刻不在，当你需要的时候，伸手可得。</p>
-<p><img src="assets/00509880-86a1-11ea-94dc-e928d61ce86c.png.png" alt="img" /></p>
+<p><img src="assets/00509880-86a1-11ea-94dc-e928d61ce86c.png" alt="img" /></p>
 <p>功能上，应该有这样一些能力：</p>
 <ul>
 <li>抽象性能与错误为体验，增加更具表达力的性能模型，赋能体验提升；</li>

@@ -215,7 +215,7 @@ function hide_canvas() {
 </code></pre>
 <p>你在这里如果对子网掩码陌生，先忽略，我们后面会讲到。</p>
 <p>如果你的地址的主机部分全部为零，就好像上面的例子那样，那么这个是网络地址。你永远不能将其分配给任何网卡。我下图标记出来了。如果全0或者全1。那就注定这不是一个普通的地址。</p>
-<p><img src="assets/20210127153800103.png.png" alt="img" /></p>
+<p><img src="assets/20210127153800103.png" alt="img" /></p>
 <h4>广播地址</h4>
 <p>先看一下这个例子</p>
 <pre><code>203.0.113.255
@@ -226,7 +226,7 @@ function hide_canvas() {
 复制
 </code></pre>
 <p>如果你的地址的主机部分为全部为1，就好像上面的例子那样，那么这个是广播地址。同理，你也永远不能将其分配给任何网卡。就好像上面说的，全0和全1都是特殊的。全0是网络地址。全1是广播地址。</p>
-<p><img src="assets/2021012715382022.png.png" alt="img" /></p>
+<p><img src="assets/2021012715382022.png" alt="img" /></p>
 <h4>主机地址</h4>
 <p>先看一下这个例子</p>
 <pre><code>203.0.113.10
@@ -247,7 +247,7 @@ function hide_canvas() {
 </code></pre>
 <h3>看透IP</h3>
 <p>我们之前说过数据的传输是靠Header来确定这是要传到哪里的数据。那我们来看一下IP的header是什么样子的？我懒得画了，就直接从网上找了一个。</p>
-<p><img src="assets/20210127153840401.png.png" alt="img" /></p>
+<p><img src="assets/20210127153840401.png" alt="img" /></p>
 <p>我们还是一个一个的字段来讲解。</p>
 <ul>
 <li>Version（版本号）4bits：用来暗示版本号，我们一直说IPV4，那这里就是4对不对，那IPV6呢？</li>
@@ -278,7 +278,7 @@ function hide_canvas() {
 <li>Data（数据）variable：数据</li>
 </ul>
 <p>下面来看一个具体的例子。不知道你有没有听过wireshark，这是一个用于包裹分析的工具，感兴趣的可以下载来试一下。</p>
-<p><img src="assets/20210127153856422.png.png" alt="img" /></p>
+<p><img src="assets/20210127153856422.png" alt="img" /></p>
 <p>从上图你可以看出，你们包含着我们上面讲的header里面的内容，上面的是理论概念，这个图是在实际发送中的具体数据包里面有什么。比如你可以看到version：4也就是IPV4。然后就是Header length，TotalLength。。。等，你可以对着上面的理论模型来找到一一对应。</p>
 </div>
                     </div>

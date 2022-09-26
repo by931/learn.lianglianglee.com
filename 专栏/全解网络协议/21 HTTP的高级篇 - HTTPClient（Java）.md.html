@@ -212,7 +212,7 @@ HttpResponse&lt;String&gt; response = httpClient.send(httpRequest, HttpResponse.
 </code></pre>
 <h3>为什么HttpURLConnection被打入冷宫</h3>
 <p>我现在心情还不错，来给你们说一下为什么HttpURLConnection被打入冷宫。</p>
-<p><img src="assets/20210219114614373.png.png" alt="img" /></p>
+<p><img src="assets/20210219114614373.png" alt="img" /></p>
 <p>这是一个悲伤的故事，那是一个寒冷的冬天。。。（回归正题）这其中有多个原因为什么需要替换HttpURLConnection，首先这是一个非常古老的API。 Java的第一个版本于20多年前1996年发布。HttpURLConnection被添加到Java的JDK 1.1中，该版本于1997年发布。这也刚刚好是HTTP 1.1的被设计出来的时间。在对HTTP请求和响应以及典型的交互模式进行建模方面，事情并没有现在那么清晰。现在看来，HttpURLConnection及其相关类中有很多过度抽象（谁告诉我抽象是好事来着，你出来，我保证不打你）。这些抽象使映射HttpURLConnection方法中发生的情况和实际HTTP发生的情况变得相对困难。</p>
 <p>该API太旧了（就是说你老，你能咋地），它不包含泛型，枚举和lambda，因此在现代Java中使用时感觉很笨拙（过时）。虽然从Java 11，HttpURLConnection已被HttpClient取代，我还是希望你能了解一下HttpURLConnection API。你还是可能会在旧代码中遇到它。只有通过查看旧的API，你才会欣赏到HttpClient给你带来的改进。</p>
 <pre><code>try{
@@ -296,9 +296,9 @@ HttpClient.newBuilder().executor(exec);
 <p>如果你要有多个标题，那当然也可以。只需重复使用header方法，直到将所需的所有标头添加到请求中即可。甚至可以使用headers方法而不是header方法一次性添加多个标题。标头始终需要偶数个参数，因为每个标头名称都必须带有一个值。如果您添加相同的标头，使用相同的标头名称，并多次使用不同的值，那么所有这些值都会出现在标头中，因为HTTP定义了标头可以具有多个值。如果你要绝对确定标头没有多个值，则也可以使用setHeader方法，该方法也可以使用标头的名称和标头的值，但不必将值添加到标头中替换当前值。</p>
 <p>当你构建请求并通过HttpClient发送请求时，HttpClient将负责以正确的方式将标头和值添加到HTTP请求。对于HTTP 1.1和HTTP 2，它的执行方式完全不同。 HTTP 1.1是纯文本协议，并且标头将添加到此纯文本中请求。 HTTP 2是一个二进制协议，标头将以二进制格式编码，甚至经过专门压缩。不过你不用担心这些，对于你来说，API是相同的，复杂性全都隐藏在HttpClient的实现中。</p>
 <p>还有另一种与HTTP紧密联系的机制，HTTP本身是无状态请求响应协议。我们从服务器请求一些东西，服务器提供响应，然后客户端和服务器彼此相忘于江湖。但是，在许多情况下，你希望保持有关服务器和客户端之间交互的某些状态（我就是忘不掉我的前女友，这可咋办）。</p>
-<p><img src="assets/20210219114640976.png.png" alt="img" /></p>
+<p><img src="assets/20210219114640976.png" alt="img" /></p>
 <p>Cookie是一种主要用于浏览器的方式。 Cookies包含服务器定义的状态，但是状态由客户端保留，然后在必要时再发送回服务器。有趣的是，这种机制是基于标头构建的。服务器还可以在响应中包含标头。并且，当服务器包含Set-Cookie标头时，客户端应将此标头解释为要保留给下一个请求的状态，这也是该机制在浏览器中的工作方式。当浏览器看到Set-Cookie标头，并且在标头的主体中包含一些键-值对时，它将把这些名称/值对存储在与请求域相关联的所谓持久性cookie中。然后，每当对同一个域提出新请求时，浏览器将包含一个Cookie标头。 Cookie头的值是先前存储的名称/值对。这样，浏览器和HTTP服务器可以在不同的无状态HTTP请求之间创建持久状态的错觉。当然，只有当服务器和客户端都知道Set-Cookie和Cookie标头时，整个设置才有效。你可以尝试使用HttpClient自己实现此目的，因为它全都与Set-Cookie和Cookie标头有关。因为关于Cookie的行为方式复杂性要很高，所以你其实并不想自己管理。好消息是HttpClient为我们提供了一个用于配置cookie的处理。你可以使用setCookieHandler来配置HttpClient使用它。如果你希望HttpClient使用cookie，那么一种快速的入门方法是使用CookieManager类。 CookieManager是CookieHandler的JDK内部的具体实现。在此示例中，我们创建一个新的管理器，第一个参数是Cookie持久存储在其中的CookieStore。</p>
-<p><img src="assets/20210219114652851.png.png" alt="img" /></p>
+<p><img src="assets/20210219114652851.png" alt="img" /></p>
 <pre><code>CookieManager cm = new CookieManager(null, CookiePolicy.ACCEPT_ALL)
 HttpClient client = HttpClient.newBuilder().cookieHandler(cm).build()
 client.send(HttpRequest.newBuilder(URI.create(&quot;https://csdn.net&quot;)).build(), HttpResponse.BodyHandlers.discarding())
